@@ -45,8 +45,8 @@ class MarkMeApp:
     def __init__(self):
         self.root = tk.Tk()
         self.root.title(t("app.title"))
-        self.root.resizable(True, False)
-        self.root.minsize(420, 0)
+        self.root.resizable(True, True)
+        self.root.minsize(420, 520)
         self.root.configure(bg=BG)
 
         self.pdf_path: str = ""
@@ -137,13 +137,14 @@ class MarkMeApp:
         card.columnconfigure(1, weight=1)
         self._adicionar_termo()
 
-        # Botão principal
+        # Botão principal (sempre visível: card row absorve espaço extra)
         row += 1
         self._btn_gerar = _make_btn(self.root, t("ui.generate"), self._gerar, padx=24, pady=12, font=("Helvetica", 12), bold=True)
         self._btn_gerar.grid(row=row, column=0, columnspan=2, pady=20, padx=16, sticky="ew")
         row += 1
 
         self.root.columnconfigure(1, weight=1)
+        self.root.rowconfigure(2, weight=1)
 
     def _sync_lang_dropdown(self) -> None:
         """Set dropdown to current language display name."""
