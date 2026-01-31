@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mark-me"
+version = "0.1.0"
+description = "Mark.me — destaque termos em PDF com cor personalizada (GUI e CLI)"
+readme = "mark_me/README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pymupdf>=1.24",
+]
+
+[project.scripts]
+mark = "mark_me.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["mark_me*"]
