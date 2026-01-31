@@ -46,7 +46,7 @@ class MarkMeApp:
         self.root = tk.Tk()
         self.root.title(t("app.title"))
         self.root.resizable(True, True)
-        self.root.minsize(420, 520)
+        self.root.minsize(420, 620)
         self.root.configure(bg=BG)
 
         self.pdf_path: str = ""
@@ -91,7 +91,7 @@ class MarkMeApp:
         row += 2
 
         card = tk.Frame(self.root, bg=SURFACE, highlightbackground=BORDER, highlightthickness=1, padx=16, pady=16)
-        card.grid(row=row, column=0, columnspan=2, padx=16, pady=(0, 12), sticky="ew")
+        card.grid(row=row, column=0, columnspan=2, padx=16, pady=(0, 12), sticky="nsew")
         row += 1
 
         # PDF
@@ -112,9 +112,10 @@ class MarkMeApp:
         # Área rolável com altura fixa + 4 colunas × 8 linhas (máx. 32 termos)
         scroll_frame = tk.Frame(card, bg=SURFACE)
         scroll_frame.grid(row=row_inner, column=0, columnspan=2, **pad_label, sticky="nsew")
+        scroll_row = row_inner
         row_inner += 1
 
-        self.scroll_canvas = tk.Canvas(scroll_frame, bg=SURFACE, highlightthickness=0, height=320)
+        self.scroll_canvas = tk.Canvas(scroll_frame, bg=SURFACE, highlightthickness=0, height=240)
         scrollbar = tk.Scrollbar(scroll_frame, orient="vertical", command=self.scroll_canvas.yview, bg=BORDER)
         self.scroll_inner = tk.Frame(self.scroll_canvas, bg=SURFACE)
         self.scroll_inner.bind("<Configure>", self._on_scroll_configure)
@@ -135,6 +136,7 @@ class MarkMeApp:
         row_inner += 1
 
         card.columnconfigure(1, weight=1)
+        card.rowconfigure(scroll_row, weight=1)
         self._adicionar_termo()
 
         # Botão principal (sempre visível: card row absorve espaço extra)
@@ -144,7 +146,7 @@ class MarkMeApp:
         row += 1
 
         self.root.columnconfigure(1, weight=1)
-        self.root.rowconfigure(2, weight=1)
+        self.root.rowconfigure(row - 2, weight=1)
 
     def _sync_lang_dropdown(self) -> None:
         """Set dropdown to current language display name."""
